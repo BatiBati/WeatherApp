@@ -8,6 +8,10 @@ export default function Home() {
   const [location, setLocation] = useState("Ulaanbaatar");
   const [searchLocation, setSearchLocation] = useState("");
   const [data, setData] = useState(null);
+  const [city, setCity] = useState();
+  const [countries, setCountries] = useState([]);
+  const [searchCountry, setSearchCountry] = useState("");
+  const [filteredCountries, setFilteredCountries] = useState([]);
 
   useEffect(() => {
     fetch(
@@ -21,6 +25,31 @@ export default function Home() {
         setData(data);
       });
   }, []);
+  useEffect(() => {
+    fetch("https://countriesnow.space/api/v0.1/countries")
+      .then((response) => response.json())
+      .then((data) => {
+        const countriesList = data.map((country) => country.name.common);
+        setCountries(countriesList);
+      })
+      .catch((error) => console.error("Error fetching countries:", error));
+  }, []);
+
+  useEffect(() => {
+    if (searchCountry) {
+      const result = countries.filter((country) =>
+        country.toLowerCase().includes(searchCountry.toLowerCase())
+      );
+      setFilteredCountries(result);
+    } else {
+      setFilteredCountries([]);
+    }
+  }, [searchCountry, countries]);
+
+  const handleSelectingCountry = (country) => {
+    setSearchCountry(country);
+    setFilteredCountries([]);
+  };
 
   console.log("minii data", data);
 
@@ -34,11 +63,29 @@ export default function Home() {
         <input
           className={styles.input}
           type="text"
-          value={searchLocation}
-          onChange={(event) => setSearchLocation(event.target.value)}
+          value={searchCountry}
+          onChange={(event) => setSearchCountry(event.target.value)}
           placeholder="Search"
         />
-        <button onClick={handleSearching} className={styles.button}>
+        <div>
+          {filteredCountries.length > 0 && (
+            <div className={styles.suggestionBox}>
+              {filteredCountries.map((country, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleSelectingCountry(country)}
+                  className={styles.suggestionItem}
+                >
+                  {country}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <button
+          onClick={() => console.log(searchCountry)}
+          className={styles.button}
+        >
           Search
         </button>
         <img src="/Images/Light-Left.png" />
@@ -50,8 +97,10 @@ export default function Home() {
             <img src="/Images/localization_icon.jpg" />
           </div>
           <img src="/Images/sun.png" />
-          <div className={styles.temp}>{data?.current.temp_c}°</div>
-          <div className={styles.condition}>{data?.current.condition.text}</div>
+          <div className={styles.temp}>{data.current.temp_c}°</div>
+          <div className={styles.condition}>
+            {data.forecast.forecastday[0].text}
+          </div>
           <div className={styles.buttons}>
             <img src="/Images/Home.png" />
             <img src="/Images/Pin.png" />
@@ -66,10 +115,8 @@ export default function Home() {
             <ActiveIcon />
           </div>
           <img src="/Images/moon.png" />
-          <div className={styles.temp1}>{data?.current.temp_c}°</div>
-          <div className={styles.condition1}>
-            {data?.current.condition.text}
-          </div>
+          <div className={styles.temp1}>{data.current.temp_c}°</div>
+          <div className={styles.condition1}>{data.current.condition.text}</div>
           <div className={styles.buttons}>
             <img src="/Images/Home.png" />
             <img src="/Images/Pin.png" />
@@ -78,8 +125,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      {/* <div className={styles.datacontainer}>{data?.current.wind_mph}</div> */}
     </div>
   );
 }
