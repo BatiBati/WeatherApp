@@ -4,65 +4,69 @@
   width: 100%;
   background-color: #f0f0f0;
 }
+
 .background {
   position: relative;
   display: flex;
   width: 100%;
   height: 100%;
 }
+
 .background > img {
   width: 50%;
   height: 100%;
   object-fit: cover;
 }
 
-.box {
+.box, .box1 {
   position: absolute;
   top: 200px;
-  left: 400px;
   display: flex;
   padding: 56px 40px;
-  background-color: white;
   border-radius: 20px;
   flex-direction: column;
   justify-content: center;
 }
+
+.box {
+  left: 400px;
+  background-color: white;
+}
+
 .box1 {
-  position: absolute;
-  top: 200px;
   right: 400px;
-  display: flex;
-  padding: 56px 40px;
   background-color: #111827bf;
-  border-radius: 20px;
-  flex-direction: column;
-  justify-content: center;
   backdrop-filter: blur(10px);
 }
-.box > div:first-child {
+
+.box > div:first-child, .box1 > div:first-child {
   font-size: 18px;
   color: #9ca3af;
 }
-.box1 > div:first-child {
-  font-size: 18px;
-  color: #9ca3af;
-}
-.location {
+
+.location, .location1 {
   display: flex;
   gap: 112px;
+  align-items: center;
 }
+
+.location > div, .location1 > div {
+  font-size: 48px;
+}
+
 .location > div {
   color: #111827;
-  font-size: 48px;
 }
+
 .location1 > div {
   color: white;
-  font-size: 48px;
 }
+
 .location > img {
   width: 32px;
   height: 32px;
 }
+
 .box1 > img {
   display: flex;
   margin-left: 29.96px;
@@ -70,47 +74,43 @@
   width: 277px;
   height: 277px;
 }
+
+.temp, .temp1 {
+  font-size: 144px;
+  font-weight: bold;
+}
+
 .temp {
   background: linear-gradient(#111827, #6b7280);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 144px;
 }
+
 .temp1 {
   background: linear-gradient(#6b7280, #111827);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 144px;
 }
+
 .condition {
   color: #ff8e27;
   font-size: 24px;
 }
+
 .condition1 {
   color: #777cce;
   font-size: 24px;
 }
+
 .buttons {
   display: flex;
   margin-top: 48px;
   gap: 63.33px;
 }
+
 .buttons > img {
   width: 32px;
   height: 32px;
-}
-
-.input {
-  position: absolute;
-  width: 400px;
-  height: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  left: 400px;
-  top: 10px;
-  border-radius: 30px;
-  padding: 20px;
-  font-size: 32px;
 }
 
 .button {
@@ -128,9 +128,84 @@
 .button:hover {
   background-color: #111827;
 }
+
 .suggestions {
   position: absolute;
   top: 100px;
   left: 300px;
   background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.suggestionItem {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestionItem:hover {
+  background-color: #f0f0f0;
+}
+
+/* .search {
+  display: flex;
+  position: relative;
+  align-items: center;
+  width: 400px;
+  height: 50px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding-left: 50px;
+  font-size: 32px;
+}
+
+.search > img {
+  position: absolute;
+  left: 10px;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+}
+
+.input {
+  position: absolute;
+  width: 400px;
+  height: 50px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding: 0 20px;
+  font-size: 16px;
+  left: 400px;
+  top: 10px;
+} */
+.search {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 400px;
+  height: 60px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding: 0 20px;
+  font-size: 20px;
+  background-color: white;
+}
+
+.search > img {
+  position: absolute;
+  left: 15px;
+  width: 32px;
+  height: 32px;
+}
+
+.input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  padding-left: 50px;
+  background: transparent;
+  width: 100%;
+  height: 100%;
 }

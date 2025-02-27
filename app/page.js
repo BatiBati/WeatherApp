@@ -9,44 +9,33 @@ export default function Home() {
   const [searchLocation, setSearchLocation] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
     fetch(
       `https://api.weatherapi.com/v1/forecast.json?key=8435428071ee475ca3373725252502&q=${location}`
     )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch weather data");
-        }
-        return res.json();
-      })
+      .then((res) => res.json())  
       .then((data) => {
         setData(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setError(error.message);
-        setLoading(false);
       });
   }, [location]);
 
   useEffect(() => {
-    if (searchLocation.length > 2) {
+    if (searchLocation.length > 1) {
       fetch("https://countriesnow.space/api/v0.1/countries")
         .then((res) => res.json())
         .then((data) => {
-          const cityList = data.data.flatMap((country) => country.cities);
-          const filteredCities = cityList.filter((city) =>
-            city.toLowerCase().includes(searchLocation.toLowerCase())
-          );
+          const cityList = data.data.map((country) => country.cities); 
+          let filteredCities = [];
+          cityList.forEach((cities) => {
+            cities.forEach((city) => {
+              if (city.toLowerCase().includes(searchLocation.toLowerCase())) {
+                filteredCities.push(city);
+              }
+            });
+          });
           setSuggestions(filteredCities);
-        })
-        .catch((err) => console.error(err));
+        });
     } else {
       setSuggestions([]);
     }
@@ -59,7 +48,6 @@ export default function Home() {
   };
 
   const currentDate = new Date().toLocaleDateString("en-US", {
-    weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -68,13 +56,6 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.background}>
-        <input
-          className={styles.input}
-          type="text"
-          value={searchLocation}
-          onChange={(e) => setSearchLocation(e.target.value)}
-          placeholder="Search"
-        />
         {suggestions.length > 0 && (
           <div className={styles.suggestions}>
             {suggestions.map((city, index) => (
@@ -90,9 +71,6 @@ export default function Home() {
         )}
         <img src="/Images/Light-Left.png" alt="Light Left" />
         <img src="/Images/Dark-right.png" alt="Dark Right" />
-
-        {loading && <div>Loading...</div>}
-        {error && <div>Error: {error}</div>}
 
         {data && (
           <>
