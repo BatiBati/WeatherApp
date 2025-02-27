@@ -14,7 +14,7 @@ export default function Home() {
     fetch(
       `https://api.weatherapi.com/v1/forecast.json?key=8435428071ee475ca3373725252502&q=${location}`
     )
-      .then((res) => res.json())  
+      .then((res) => res.json())
       .then((data) => {
         setData(data);
       });
@@ -25,15 +25,21 @@ export default function Home() {
       fetch("https://countriesnow.space/api/v0.1/countries")
         .then((res) => res.json())
         .then((data) => {
-          const cityList = data.data.map((country) => country.cities); 
+          const countryList = data.data.map((country) => ({
+            countryName: country.country,
+            cities: country.cities,
+          }));
+
           let filteredCities = [];
-          cityList.forEach((cities) => {
+
+          countryList.forEach(({ countryName, cities }) => {
             cities.forEach((city) => {
               if (city.toLowerCase().includes(searchLocation.toLowerCase())) {
-                filteredCities.push(city);
+                filteredCities.push({ city, countryName });
               }
             });
           });
+
           setSuggestions(filteredCities);
         });
     } else {
@@ -41,8 +47,34 @@ export default function Home() {
     }
   }, [searchLocation]);
 
+  useEffect(() => {
+    if (searchLocation.length > 1) {
+      fetch("https://countriesnow.space/api/v0.1/countries")
+        .then((res) => res.json())
+        .then((data) => {
+          const allSuggestions = [];
+          data.data.forEach((country) => {
+            country.cities
+              .filter((city) =>
+                city.toLowerCase().includes(searchLocation.toLowerCase())
+              )
+              .forEach((city) => {
+                allSuggestions.push({
+                  city,
+                  country: country.country,
+                });
+              });
+          });
+          setSuggestions(allSuggestions);
+        });
+    } else {
+      setSuggestions([]);
+    }
+  }, [searchLocation]);
+
   const handleSelectLocation = (selectedLocation) => {
-    setLocation(selectedLocation);
+    setLocation(selectedLocation.city);
+    setLocation(selectedLocation.country);
     setSearchLocation("");
     setSuggestions([]);
   };
@@ -56,15 +88,27 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.background}>
+        <div className={styles.inputField}>
+          <img src="Images/search (1).png" />
+          <input
+            type="text"
+            value={searchLocation}
+            onChange={(e) => setSearchLocation(e.target.value)}
+            placeholder="Search"
+            className={styles.input}
+          />
+        </div>
+
         {suggestions.length > 0 && (
           <div className={styles.suggestions}>
-            {suggestions.map((city, index) => (
+            {suggestions.map((suggestion, index) => (
               <div
                 key={index}
                 className={styles.suggestionItem}
-                onClick={() => handleSelectLocation(city)}
+                onClick={() => handleSelectLocation(suggestion)}
               >
-                {city}
+                <img src="/Images/room.png" />
+                {suggestion.city}, {suggestion.country}
               </div>
             ))}
           </div>
@@ -82,7 +126,9 @@ export default function Home() {
               </div>
               <img src="/Images/sun.png" alt="Weather Icon" />
               <div className={styles.temp}>{data.current.temp_c}°C</div>
-              <div className={styles.condition}>{data.current.condition.text}</div>
+              <div className={styles.condition}>
+                {data.current.condition.text}
+              </div>
               <div className={styles.buttons}>
                 <img src="/Images/Home.png" alt="Home" />
                 <img src="/Images/Pin.png" alt="Pin" />
@@ -98,8 +144,12 @@ export default function Home() {
                 <ActiveIcon />
               </div>
               <img src="/Images/moon.png" alt="Weather Icon" />
-              <div className={styles.temp1}>{data.current.temp_c}°C</div>
-              <div className={styles.condition1}>{data.current.condition.text}</div>
+              <div className={styles.temp1}>
+                {data.forecast.forecastday[0].hour[23].temp_c}°C
+              </div>
+              <div className={styles.condition1}>
+                {data.forecast.forecastday[0].hour[23].condition.text}
+              </div>
               <div className={styles.buttons}>
                 <img src="/Images/Home.png" alt="Home" />
                 <img src="/Images/Pin.png" alt="Pin" />

@@ -18,7 +18,8 @@
   object-fit: cover;
 }
 
-.box, .box1 {
+.box,
+.box1 {
   position: absolute;
   top: 200px;
   display: flex;
@@ -34,23 +35,26 @@
 }
 
 .box1 {
-  right: 400px;
+  right: 300px;
   background-color: #111827bf;
   backdrop-filter: blur(10px);
 }
 
-.box > div:first-child, .box1 > div:first-child {
+.box > div:first-child,
+.box1 > div:first-child {
   font-size: 18px;
   color: #9ca3af;
 }
 
-.location, .location1 {
+.location,
+.location1 {
   display: flex;
-  gap: 112px;
+  justify-content: space-between;
   align-items: center;
 }
 
-.location > div, .location1 > div {
+.location > div,
+.location1 > div {
   font-size: 48px;
 }
 
@@ -69,13 +73,14 @@
 
 .box1 > img {
   display: flex;
-  margin-left: 29.96px;
+  justify-items: center;
   margin-top: 49px;
-  width: 277px;
-  height: 277px;
+  width: 290px;
+  height: 290px;
 }
 
-.temp, .temp1 {
+.temp,
+.temp1 {
   font-size: 144px;
   font-weight: bold;
 }
@@ -131,81 +136,63 @@
 
 .suggestions {
   position: absolute;
-  top: 100px;
-  left: 300px;
+  top: 140px;
+  left: 40px;
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 4px;
   z-index: 2;
+  border-radius: 30px;
+  padding-top: 16px;
+  padding-bottom: 20px;
+  width: 567px;
+  font-size: 28px;
+  gap: 25px;
+  max-height: 200px;
+  overflow: scroll;
 }
 
 .suggestionItem {
+  display: flex;
   padding: 10px;
   cursor: pointer;
+  gap: 10px;
 }
-
+.suggestionItem > img {
+  width: 40px;
+  height: 40px;
+}
 .suggestionItem:hover {
   background-color: #f0f0f0;
 }
 
-/* .search {
+.inputFiled > img {
   display: flex;
-  position: relative;
-  align-items: center;
-  width: 400px;
-  height: 50px;
-  border: 1px solid #ccc;
-  border-radius: 30px;
-  padding-left: 50px;
-  font-size: 32px;
-}
-
-.search > img {
-  position: absolute;
-  left: 10px;
-  z-index: 1;
   width: 32px;
   height: 32px;
 }
 
 .input {
-  position: absolute;
-  width: 400px;
-  height: 50px;
-  border: 1px solid #ccc;
-  border-radius: 30px;
-  padding: 0 20px;
-  font-size: 16px;
-  left: 400px;
-  top: 10px;
-} */
-.search {
-  display: flex;
-  align-items: center;
-  position: relative;
-  width: 400px;
-  height: 60px;
-  border: 1px solid #ccc;
-  border-radius: 30px;
-  padding: 0 20px;
-  font-size: 20px;
-  background-color: white;
-}
-
-.search > img {
-  position: absolute;
-  left: 15px;
-  width: 32px;
-  height: 32px;
-}
-
-.input {
-  flex-grow: 1;
   border: none;
   outline: none;
   font-size: 20px;
-  padding-left: 50px;
+  padding-left: 16px;
   background: transparent;
-  width: 100%;
-  height: 100%;
+}
+
+.inputField {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: 567px;
+  height: 50px;
+  padding-left: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 40px;
+  font-size: 20px;
+  background-color: white;
+  left: 40px;
+  top: 40px;
 }
