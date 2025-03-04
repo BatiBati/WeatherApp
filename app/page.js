@@ -25,59 +25,37 @@ export default function Home() {
       fetch("https://countriesnow.space/api/v0.1/countries")
         .then((res) => res.json())
         .then((data) => {
-          const countryList = data.data.map((country) => ({
-            countryName: country.country,
-            cities: country.cities,
-          }));
-
-          let filteredCities = [];
-
-          countryList.forEach(({ countryName, cities }) => {
-            cities.forEach((city) => {
+          const countryList = data.data;
+          let matchedResults = [];
+  
+          countryList.forEach(({ country, cities }) => {
+            // If user types a country name, show all its cities
+            if (country.toLowerCase().includes(searchLocation.toLowerCase())) {
+              cities.forEach(city => matchedResults.push({ city, country }));
+            }
+  
+            // If user types a city name, find and show the matching city
+            cities.forEach(city => {
               if (city.toLowerCase().includes(searchLocation.toLowerCase())) {
-                filteredCities.push({ city, countryName });
+                matchedResults.push({ city, country });
               }
             });
           });
-
-          setSuggestions(filteredCities);
+  
+          setSuggestions(matchedResults);
         });
     } else {
       setSuggestions([]);
     }
   }, [searchLocation]);
-
-  useEffect(() => {
-    if (searchLocation.length > 1) {
-      fetch("https://countriesnow.space/api/v0.1/countries")
-        .then((res) => res.json())
-        .then((data) => {
-          const allSuggestions = [];
-          data.data.forEach((country) => {
-            country.cities
-              .filter((city) =>
-                city.toLowerCase().includes(searchLocation.toLowerCase())
-              )
-              .forEach((city) => {
-                allSuggestions.push({
-                  city,
-                  country: country.country,
-                });
-              });
-          });
-          setSuggestions(allSuggestions);
-        });
-    } else {
-      setSuggestions([]);
-    }
-  }, [searchLocation]);
+  
 
   const handleSelectLocation = (selectedLocation) => {
-    setLocation(selectedLocation.city);
-    setLocation(selectedLocation.country);
-    setSearchLocation("");
-    setSuggestions([]);
+    setLocation(selectedLocation.city); 
+    setSearchLocation(""); 
+    setSuggestions([]); 
   };
+  
 
   const currentDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",
