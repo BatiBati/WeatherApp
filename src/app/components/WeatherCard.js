@@ -10,35 +10,35 @@ export default function WeatherCard({
 
   return (
     <div
-      class={`flex absolute top-[200px] pt-[56px] pl-[40px] pr-[40px] pb-[56px] rounded-[20px] flex-col justify-center ${
+      className={`flex absolute top-[200px] pt-[56px] pl-[40px] pr-[40px] pb-[56px] rounded-[20px] flex-col justify-center ${
         isNight
           ? "right-[300px] bg-[#111827bf] backdrop-blur-[10px]"
           : "left-[400px] bg-[white]"
       }`}
     >
-      <div class="text-[18px] text-[#9ca3af] font-[500]">{currentDate}</div>
-      <div class="flex justify-between items-center gap-[112px]">
+      <div className="text-[18px] text-[#9ca3af] font-[500]">{currentDate}</div>
+      <div className="flex justify-between items-center gap-[112px]">
         <div
-          class={`text-[48px] font-[800] ${
+          className={`text-[48px] font-[800] ${
             isNight ? "text-[white]" : "text-[#111827]"
           }`}
         >
           {location}
         </div>
         {Icon ? (
-          <Icon class="w-[32px] h-[32px]" />
+          <Icon className="w-[32px] h-[32px]" />
         ) : (
-          <img src="/Images/localization_icon.jpg" class="w-[32px] h-[32px]" />
+          <img src="/Images/localization_icon.jpg" className="w-[32px] h-[32px]" />
         )}
       </div>
-      <div class="flex justify-center">
+      <div className="flex justify-center">
         <img
           src={isNight ? "/Images/moon.png" : "/Images/sun.png"}
-          class="w-[274px] h-[274px]"
+          className="w-[274px] h-[274px]"
         />
       </div>
       <div
-        class={`text-[144px] font-bold bg-clip-text font-[800] ${
+        className={`text-[144px] font-bold bg-clip-text font-[800] ${
           isNight
             ? "bg-linear-[#6b7280,#111827]"
             : "bg-linear-[#111827,#6b7280]"
@@ -48,20 +48,20 @@ export default function WeatherCard({
         {temperature}°
       </div>
       <div
-        class={`text-[24px] font-[800] ${
+        className={`text-[24px] font-[800] ${
           isNight ? "text-[#777cce]" : "text-[#ff8e27]"
         }`}
       >
         {condition}
       </div>
-      <div class="flex mt-[48px] gap-[63.33px]">
+      <div className="flex mt-[48px] gap-[63.33px]">
         <img
           src={isNight ? "/Images/night-home.png" : "/Images/Home.png"}
-          class="w-[32px] h-[32px]"
+          className="w-[32px] h-[32px]"
         />
-        <img src="/Images/Pin.png" class="w-[32px] h-[32px]" />
-        <img src="/Images/Heart.png" class="w-[32px] h-[32px]" />
-        <img src="/Images/User.png" class="w-[32px] h-[32px]" />
+        <img src="/Images/Pin.png" className="w-[32px] h-[32px]" />
+        <img src="/Images/Heart.png" className="w-[32px] h-[32px]" />
+        <img src="/Images/User.png" className="w-[32px] h-[32px]" />
       </div>
     </div>
   );

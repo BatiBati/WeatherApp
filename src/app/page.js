@@ -65,8 +65,8 @@ export default function Home() {
   });
 
   return (
-    <div class="flex h-screen w-full">
-      <div class="flex relative w-full h-full">
+    <div className="flex h-screen w-full">
+      <div className="flex relative w-full h-full">
         <SearchBar
           value={searchLocation}
           onChange={(e) => setSearchLocation(e.target.value)}
@@ -79,8 +79,8 @@ export default function Home() {
           />
         )}
 
-        <img src="/Images/Light-Left.png" class="w-1/2 h-full object-cover" />
-        <img src="/Images/Dark-right.png" class="w-1/2 h-full object-cover" />
+        <img src="/Images/Light-Left.png" className="w-1/2 h-full object-cover" />
+        <img src="/Images/Dark-right.png" className="w-1/2 h-full object-cover" />
 
         {data && (
           <>
