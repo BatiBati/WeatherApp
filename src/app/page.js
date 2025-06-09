@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { ActiveIcon } from "../assets/Location-icon";
+import WeatherCard from "./components/WeatherCard";
+import Suggestions from "./components/SuggestionList";
+import SearchBar from "./components/SearchBar";
 
 export default function Home() {
   const [location, setLocation] = useState("Ulaanbaatar");
@@ -37,13 +40,8 @@ export default function Home() {
                 .toLowerCase()
                 .includes(searchLocation.toLowerCase());
 
-              if (isCountryMatch) {
-                matchedResults.push({ city, country });
-              }
-
-              if (isCityMatch) {
-                matchedResults.push({ city, country });
-              }
+              if (isCountryMatch) matchedResults.push({ city, country });
+              if (isCityMatch) matchedResults.push({ city, country });
             });
           });
 
@@ -68,101 +66,42 @@ export default function Home() {
 
   return (
     <div class="flex h-screen w-full">
-      <div class="flex relative w-full h-full ">
-        <div class="flex items-center absolute w-[567px] h-[80px] pl-[24px] pt-[16px] pb-[16px] border order-solid border-[#ccc] rounded-[40px] text-[20px] bg-[white] left-[40px] top-[40px] font-[700]">
-          <img src="Images/search (1).png" class="flex w-[32px] h-[32px]" />
-          <input
-            type="text"
-            value={searchLocation}
-            onChange={(e) => setSearchLocation(e.target.value)}
-            placeholder="Search"
-            class="divide-none outline-none text-[20px] pl-[16px] bg-transparent"
-          />
-        </div>
+      <div class="flex relative w-full h-full">
+        <SearchBar
+          value={searchLocation}
+          onChange={(e) => setSearchLocation(e.target.value)}
+        />
 
         {suggestions.length > 0 && (
-          <div class="absolute top-[140px] left-[40px] bg-[white] border order-solid border-[#ccc] rounded-[30px] z-2 pt-[16px] pb-20px w-[567px] text-[28px] gap-[25px] max-h-[216px] overflow-scroll font-[700]">
-            {suggestions.map((suggestion, index) => (
-              <div
-                key={index}
-                class="flex p-[10px] cursor-pointer gap-[16px] hover:bg-[#f0f0f0] opacity-[90%]"
-                onClick={() => handleSelectLocation(suggestion)}
-              >
-                <img src="/Images/room.png" class="w-[40px] h-[40px]" />
-                {suggestion.city}, {suggestion.country}
-              </div>
-            ))}
-          </div>
+          <Suggestions
+            suggestions={suggestions}
+            onSelect={handleSelectLocation}
+          />
         )}
+
         <img src="/Images/Light-Left.png" class="w-1/2 h-full object-cover" />
         <img src="/Images/Dark-right.png" class="w-1/2 h-full object-cover" />
 
         {data && (
-          <div>
-            <div class="flex absolute top-[200px] pt-[56px] pl-[40px] pr-[40px] pb-[56px] rounded-[20px] flex-col justify-center left-[400px] bg-[white]">
-              <div class="text-[18px] text-[#9ca3af] font-[500]">
-                {currentDate}
-              </div>
-              <div class="flex justify-between items-center gap-[112px]">
-                <div class="text-[48px] text-[#111827] font-[800]">
-                  {location}
-                </div>
-                <img
-                  src="/Images/localization_icon.jpg"
-                  class="w-[32px] h-[32px]"
-                />
-              </div>
-              <div class="flex justify-center">
-                <img src="/Images/sun.png" class="w-[274.09px] h-[274.09px]" />
-              </div>
+          <>
+            <WeatherCard
+              variant="day"
+              location={location}
+              currentDate={currentDate}
+              temperature={Math.round(data.current.temp_c)}
+              condition={data.current.condition.text}
+            />
 
-              <div
-                class="text-[144px] font-bold bg-linear-[#111827,#6b7280] bg-clip-text font-[800]"
-                style={{ WebkitTextFillColor: "transparent" }}
-              >
-                {Math.round(data.current.temp_c)}°
-              </div>
-              <div class="text-[#ff8e27] text-[24px] font-[800]">
-                {data.current.condition.text}
-              </div>
-              <div class="flex mt-[48px] gap-[63.33px]">
-                <img src="/Images/Home.png" class="w-[32px] h-[32px]" />
-                <img src="/Images/Pin.png" class="w-[32px] h-[32px]" />
-                <img src="/Images/Heart.png" class="w-[32px] h-[32px]" />
-                <img src="/Images/User.png" class="w-[32px] h-[32px]" />
-              </div>
-            </div>
-
-            <div class="flex absolute top-[200px] pt-[56px] pl-[40px] pr-[40px] pb-[56px] rounded-[20px] flex-col justify-center right-[300px] bg-[#111827bf] backdrop-blur-[10px]">
-              <div class="text-[18px] text-[#9ca3af] font-[500]">
-                {currentDate}
-              </div>
-              <div class="flex justify-between items-center gap-[112px]">
-                <div class="text-[48px] text-[white] font-[800]">
-                  {location}
-                </div>
-                <ActiveIcon class="w-[32px] h-[32px]" />
-              </div>
-              <div class="flex justify-center">
-                <img src="/Images/moon.png" class="w-[277px] h-[277px]" />
-              </div>
-              <div
-                class="text-[144px] font-bold bg-linear-[#6b7280,#111827] bg-clip-text font-[800]"
-                style={{ WebkitTextFillColor: "transparent" }}
-              >
-                {Math.round(data.forecast.forecastday[0].hour[23].temp_c)}°
-              </div>
-              <div class="text-[#777cce] text-[24px] font-[800]">
-                {data.forecast.forecastday[0].hour[23].condition.text}
-              </div>
-              <div class="flex mt-[48px] gap-[63.33px]">
-                <img src="/Images/night-home.png" class="w-[32px] h-[32px]" />
-                <img src="/Images/Pin.png" class="w-[32px] h-[32px]" />
-                <img src="/Images/Heart.png" class="w-[32px] h-[32px]" />
-                <img src="/Images/User.png" class="w-[32px] h-[32px]" />
-              </div>
-            </div>
-          </div>
+            <WeatherCard              variant="night"
+              location={location}
+              currentDate={currentDate}
+              temperature={Math.round(
+                data.forecast.forecastday[0].hour[23].temp_c
+              )}
+              condition={data.forecast.forecastday[0].hour[23].condition.text}
+              Icon={ActiveIcon}
+            />
+          </>
         )}
       </div>
     </div>
