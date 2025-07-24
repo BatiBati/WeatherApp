@@ -21,6 +21,7 @@ export const ActiveIcon = () => {
         stroke="#9CA3AF"
         strokeWidth="2"
         strokeLinecap="round"
+        
         strokeLinejoin="round"
       />
     </svg>
