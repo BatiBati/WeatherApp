@@ -7,7 +7,7 @@ export default function Suggestions({ suggestions, onSelect }) {
           className="flex p-[10px] cursor-pointer gap-[16px] hover:bg-[#f0f0f0] opacity-[90%]"
           onClick={() => onSelect(suggestion)}
         >
-          <img src="/Images/room.png" className="w-[40px] h-[40px]" />
+          <img src="/Images/rooms.png" className="w-[40px] h-[40px]" />
           {suggestion.city}, {suggestion.country}
         </div>
       ))}

@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import styles from "./page.module.css";
 import { ActiveIcon } from "../assets/Location-icon";
 import WeatherCard from "./components/WeatherCard";
 import Suggestions from "./components/SuggestionList";
@@ -80,7 +79,7 @@ export default function Home() {
         )}
 
         <img src="/Images/Light-Left.png" className="w-1/2 h-full " />
-        <img src="/Images/Dark-right.png" className="w-1/2 h-full " />
+        <img src="/Images/Dark-right1.png" className="w-1/2 h-full " />
 
         {data && (
           <>
