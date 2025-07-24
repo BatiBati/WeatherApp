@@ -9,19 +9,18 @@ export default function WeatherCard({
   const isNight = variant === "night";
 
   return (
+
     <div
-      className={`flex absolute top-[200px] pt-[56px] pl-[40px] pr-[40px] pb-[56px] rounded-[20px] flex-col justify-center ${
-        isNight
-          ? "right-[300px] bg-[#111827bf] backdrop-blur-[10px]"
-          : "left-[400px] bg-[white]"
-      }`}
+      className={`flex absolute top-[100px] w-fit h-fit p-5 rounded-[20px] flex-col justify-center ${isNight
+        ? "right-[300px] bg-[#111827bf] backdrop-blur-[10px]"
+        : "left-[400px] bg-[white]"
+        }`}
     >
       <div className="text-[18px] text-[#9ca3af] font-[500]">{currentDate}</div>
       <div className="flex justify-between items-center gap-[112px]">
         <div
-          className={`text-[48px] font-[800] ${
-            isNight ? "text-[white]" : "text-[#111827]"
-          }`}
+          className={`text-[48px] font-[800] ${isNight ? "text-[white]" : "text-[#111827]"
+            }`}
         >
           {location}
         </div>
@@ -38,19 +37,17 @@ export default function WeatherCard({
         />
       </div>
       <div
-        className={`text-[144px] font-bold bg-clip-text font-[800] ${
-          isNight
-            ? "bg-linear-[#6b7280,#111827]"
-            : "bg-linear-[#111827,#6b7280]"
-        }`}
+        className={`text-[144px] bg-clip-text font-[800] ${isNight
+          ? "bg-linear-[#6b7280,#111827]"
+          : "bg-linear-[#111827,#6b7280]"
+          }`}
         style={{ WebkitTextFillColor: "transparent" }}
       >
         {temperature}°
       </div>
       <div
-        className={`text-[24px] font-[800] ${
-          isNight ? "text-[#777cce]" : "text-[#ff8e27]"
-        }`}
+        className={`text-[24px] font-[800] ${isNight ? "text-[#777cce]" : "text-[#ff8e27]"
+          }`}
       >
         {condition}
       </div>
@@ -64,5 +61,6 @@ export default function WeatherCard({
         <img src="/Images/User.png" className="w-[32px] h-[32px]" />
       </div>
     </div>
+
   );
 }

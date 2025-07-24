@@ -65,7 +65,7 @@ export default function Home() {
   });
 
   return (
-    <div className="flex h-screen w-full">
+    <div className="flex w-screen h-screen">
       <div className="flex relative w-full h-full">
         <SearchBar
           value={searchLocation}
@@ -79,8 +79,8 @@ export default function Home() {
           />
         )}
 
-        <img src="/Images/Light-Left.png" className="w-1/2 h-full object-cover" />
-        <img src="/Images/Dark-right.png" className="w-1/2 h-full object-cover" />
+        <img src="/Images/Light-Left.png" className="w-1/2 h-full " />
+        <img src="/Images/Dark-right.png" className="w-1/2 h-full " />
 
         {data && (
           <>
@@ -92,7 +92,7 @@ export default function Home() {
               condition={data.current.condition.text}
             />
 
-            <WeatherCard              variant="night"
+            <WeatherCard variant="night"
               location={location}
               currentDate={currentDate}
               temperature={Math.round(
